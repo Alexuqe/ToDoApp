@@ -7,23 +7,67 @@
 
 import UIKit
 
-class MenuViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
+
+class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    enum MenuOption: String, CaseIterable {
+        case home = "Home"
+        case info = "Information"
+        case appRating = "App Raiting"
+        case shareApp = "Share App"
+        case settings = "Setings"
     }
-    */
+ 
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.backgroundColor = .none
+        return tableView
+    }()
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = CGRect(
+            x: 0,
+            y: view.safeAreaInsets.top,
+            width: view.bounds.size.width,
+            height: view.bounds.size.height
+        )
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.addSubview(tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        view.backgroundColor = .none
+        
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return MenuOption.allCases.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        
+        var content = cell.defaultContentConfiguration()
+        
+        content.text = MenuOption.allCases[indexPath.row].rawValue
+        content.imageProperties.cornerRadius = tableView.rowHeight / 2
+        
+        cell.backgroundColor = .none
+        cell.contentView.backgroundColor = .none
+        cell.contentConfiguration = content
+        
+        return cell
+    }
+
 
 }

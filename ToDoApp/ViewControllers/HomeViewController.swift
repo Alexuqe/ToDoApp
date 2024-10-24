@@ -7,23 +7,35 @@
 
 import UIKit
 
+protocol HomeViewControllerDelegate: AnyObject {
+    func didTap()
+}
+
+
 class HomeViewController: UIViewController {
+    
+    weak var delegate: HomeViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .systemGray5
+        title = " Home View"
+        navigationItem.titleView?.tintColor = .black
+            
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "list.dash"),
+            style: .done,
+            target: self,
+            action: #selector(barButtonTapped)
+        )
+        
+        navigationItem.leftBarButtonItem?.tintColor = .black
+    }
+    
+    @objc func barButtonTapped() {
+        delegate?.didTap()
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
