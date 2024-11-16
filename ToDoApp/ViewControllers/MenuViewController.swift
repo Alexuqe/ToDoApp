@@ -12,7 +12,7 @@ import UIKit
 
 class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-
+    private var trackList = Track.getTrackList()
 
     enum MenuOption: String, CaseIterable {
         case home = "Home"
@@ -50,6 +50,11 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let infoVC = segue.destination as? InfoViewController
+        infoVC?.track = sender as? Track
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MenuOption.allCases.count
     }
@@ -67,6 +72,13 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.contentConfiguration = content
         
         return cell
+    }
+    
+    
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let row = MenuOption.allCases[indexPath.row].rawValue
+        performSegue(withIdentifier: "showDetails", sender: row)
     }
 
 

@@ -9,6 +9,8 @@ import UIKit
 
 class MainViewController: UIViewController {
     
+    private var trackList = Track.getTrackList()
+    
     enum MenuState {
         case opened
         case closed
@@ -52,7 +54,7 @@ extension MainViewController: HomeViewControllerDelegate {
                         usingSpringWithDamping: 0.8,
                         initialSpringVelocity: 0,
                         options: .curveEaseInOut) {
-                            self.navVC?.view.frame.origin.x = self.homeVC.view.frame.size.width - 100
+                            self.navVC?.view.frame.origin.x = self.homeVC.view.frame.size.width - 200
                         } completion: { [weak self](done) in
                             if done {
                                 self?.menuState = .opened

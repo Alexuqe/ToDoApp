@@ -9,6 +9,9 @@ import UIKit
 
 class InfoViewController: UIViewController {
 
+    
+    var track: Track!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
